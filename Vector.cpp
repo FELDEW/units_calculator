@@ -43,7 +43,7 @@ float Vector::get_y(void) const {
 
 float angle_between_vectors(const Vector& vector1_n, const Vector& vector2_n) {
 	float angle = acos(vector1_n.get_x() * vector2_n.get_x() + vector1_n.get_y() * vector2_n.get_y());
-	return angle;
+	return angle * 180 / M_PI;
 }
 
 std::ostream& operator<<(std::ostream& out, const Vector& vector) {

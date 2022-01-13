@@ -24,7 +24,7 @@ int parse_line(std::vector<Unit> &units, std::string line) {
 	ret = sscanf(line.c_str(), "%s : position (%f,%f), direction (%f,%f)", buf, &p_x, &p_y, &dir_x, &dir_y);
 	std::string name(buf);
 	Vector position(p_x, p_y);
-	Vector view_direction(dir_x, p_y);
+	Vector view_direction(dir_x, dir_y);
 	Unit unit(name, position, view_direction);
 	units.push_back(unit);
 	return ret;
