@@ -26,7 +26,7 @@ int main () {
 	srand(number_of_units);
 	out << "Sector " << rand() % 360 + 1 << "degrees, distance " << rand() % (number_of_units)<< "units\n";
 	for (int i = 1; i <= number_of_units; i++) {
-		out << "Unit" << i << ": position " << vector_generator(0, number_of_units);
+		out << "Unit" << i << " : position " << vector_generator(0, number_of_units);
 		out << ", direction " << vector_generator(1, number_of_units) << std::endl;
 	}
 	out.close();
