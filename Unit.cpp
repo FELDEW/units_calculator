@@ -23,10 +23,10 @@ Unit& Unit::operator=(const Unit& origin) {
 
 bool Unit::is_in_FOV(const Unit& unit) {
 	Vector diff = unit.position - this->position;
-	float distance_length = diff.get_vector_length();
-	if (distance_length <= Unit::_view_distance && distance_length != 0) {
-		float angle = angle_between_vectors(this->view_direction, diff.normalized(distance_length));
-		if (angle < Unit::_FOV / 2) {
+	float distance_length_pow2 = diff.get_vector_length();
+	if (distance_length_pow2 <= Unit::_view_distance_pow2 && distance_length_pow2 != 0) {
+		float angle = angle_between_vectors(this->view_direction, diff.normalized(distance_length_pow2));
+		if (angle > Unit::_cos_FOV) {
 			this->units_in_FOV_counter++;
 			return true;
 		}
@@ -43,11 +43,11 @@ int Unit::get_units_in_FOV_counter(void) const {
 }
 
 void Unit::set_FOV(const float& new_FOV) {
-	Unit::_FOV = new_FOV;
+	Unit::_cos_FOV = cos(new_FOV * M_PI / 360);
 }
 
 void Unit::set_view_distance(const float& new_view_distance) {
-	Unit::_view_distance = new_view_distance;
+	Unit::_view_distance_pow2 = pow(new_view_distance, 2);
 }
 
 std::ostream& operator<<(std::ostream& out, const Unit& unit) {
@@ -55,5 +55,5 @@ std::ostream& operator<<(std::ostream& out, const Unit& unit) {
 	return (out);
 }
 
-float Unit::_FOV = 0;
-float Unit::_view_distance = 0;
+float Unit::_cos_FOV = 1;
+float Unit::_view_distance_pow2 = 0;

@@ -24,12 +24,13 @@ Vector Vector::operator-(const Vector& deducted) const {
 }
 
 float Vector::get_vector_length(void) const {
-	return (sqrt(pow(this->x, 2) + pow(this->y, 2)));
+	return (pow(this->x, 2) + pow(this->y, 2));
 }
 
 Vector Vector::normalized(const float& length) const {
-	float new_x = this->x / length;
-	float new_y = this->y / length;
+	float length_sqrt = sqrt(length);
+	float new_x = this->x / length_sqrt;
+	float new_y = this->y / length_sqrt;
 	return Vector(new_x, new_y);
 }
 
@@ -42,8 +43,8 @@ float Vector::get_y(void) const {
 }
 
 float angle_between_vectors(const Vector& vector1_n, const Vector& vector2_n) {
-	float angle = acos(vector1_n.get_x() * vector2_n.get_x() + vector1_n.get_y() * vector2_n.get_y());
-	return angle * 180 / M_PI;
+	float angle = vector1_n.get_x() * vector2_n.get_x() + vector1_n.get_y() * vector2_n.get_y();
+	return angle;
 }
 
 std::ostream& operator<<(std::ostream& out, const Vector& vector) {

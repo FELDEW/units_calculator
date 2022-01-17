@@ -11,8 +11,8 @@ class Unit
 		Vector position;
 		Vector view_direction;
 		unsigned units_in_FOV_counter;
-		static float _FOV;
-		static float _view_distance;
+		static float _cos_FOV;
+		static float _view_distance_pow2;
 		Unit();
 	public:
 		Unit(const std::string& name, const Vector& position, const Vector& view_direction);
