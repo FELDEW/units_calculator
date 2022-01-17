@@ -7,9 +7,7 @@
 void calc_units_in_view(std::vector<Unit> &units, unsigned start, unsigned step) {
 	unsigned size = units.size();
 	for (unsigned i = start; i < size; i += step) {
-		for (unsigned j = 0; j < size; j++) {
-			if (i == j)
-				continue ;
+		for (unsigned j = i + 1; j < size; j++) {
 			units[i].is_in_FOV(units[j]);
 		}
 	}

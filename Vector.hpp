@@ -21,7 +21,7 @@ class Vector
 		float get_y(void) const;
 };
 
-float angle_between_vectors(const Vector& vector1, const Vector& vector2);
+float cos_angle_between_vectors(const Vector& vector1, const Vector& vector2);
 std::ostream& operator<<(std::ostream& out, const Vector& vector);
 
 #endif

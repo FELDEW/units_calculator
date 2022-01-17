@@ -21,17 +21,18 @@ Unit& Unit::operator=(const Unit& origin) {
 	return (*this);
 }
 
-bool Unit::is_in_FOV(const Unit& unit) {
+void Unit::is_in_FOV(Unit& unit) {
 	Vector diff = unit.position - this->position;
 	float distance_length_pow2 = diff.get_vector_length();
 	if (distance_length_pow2 <= Unit::_view_distance_pow2 && distance_length_pow2 != 0) {
-		float angle = angle_between_vectors(this->view_direction, diff.normalized(distance_length_pow2));
-		if (angle > Unit::_cos_FOV) {
+		float angle = cos_angle_between_vectors(this->view_direction, diff.normalized(distance_length_pow2));
+		float angle2 = cos_angle_between_vectors(unit.view_direction, diff.normalized(distance_length_pow2));
+		if (angle > Unit::_cos_FOV)
 			this->units_in_FOV_counter++;
-			return true;
-		}
+		if (angle2 > Unit::_cos_FOV)
+			unit.units_in_FOV_counter++;
 	}
-	return false;	
+	return ;	
 }
 
 const std::string& Unit::get_name(void) const {

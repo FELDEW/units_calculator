@@ -42,7 +42,7 @@ float Vector::get_y(void) const {
 	return (this->y);
 }
 
-float angle_between_vectors(const Vector& vector1_n, const Vector& vector2_n) {
+float cos_angle_between_vectors(const Vector& vector1_n, const Vector& vector2_n) {
 	float angle = vector1_n.get_x() * vector2_n.get_x() + vector1_n.get_y() * vector2_n.get_y();
 	return angle;
 }

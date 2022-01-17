@@ -18,7 +18,7 @@ class Unit
 		Unit(const std::string& name, const Vector& position, const Vector& view_direction);
 		Unit(const Unit& origin);
 		Unit& operator=(const Unit& origin);
-		bool is_in_FOV(const Unit& unit);
+		void is_in_FOV(Unit& unit);
 		const std::string& get_name(void) const;
 		int get_units_in_FOV_counter(void) const;
 		static void set_FOV(const float& new_FOV);
