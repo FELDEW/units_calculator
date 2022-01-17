@@ -45,8 +45,9 @@ void parser(std::vector<Unit>& units) {
 int main() {
 	std::vector<Unit> units;
 	std::vector<std::thread> threads;
-	unsigned threads_number;
+	// unsigned threads_number;
 	parser(units);
+	/*
 	threads_number = std::thread::hardware_concurrency();
 	if (threads_number < 1)
 		threads_number = 1;
@@ -54,6 +55,8 @@ int main() {
 		threads.push_back(std::thread(calc_units_in_view, std::ref(units), i, threads_number));
 	for (auto &thread : threads)
 		thread.join();
+		*/
+	calc_units_in_view(units, 0, 1);
 	for (auto unit : units)
 		std::cout << unit;
 	return (0);
