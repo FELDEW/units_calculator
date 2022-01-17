@@ -27,10 +27,16 @@ void Unit::is_in_FOV(Unit& unit) {
 	if (distance_length_pow2 <= Unit::_view_distance_pow2 && distance_length_pow2 != 0) {
 		float angle = cos_angle_between_vectors(this->view_direction, diff.normalized(distance_length_pow2));
 		float angle2 = cos_angle_between_vectors(unit.view_direction, diff.normalized(distance_length_pow2));
-		if (angle > Unit::_cos_FOV)
+		if (angle > Unit::_cos_FOV) {
+			this->local_mutex.lock();
 			this->units_in_FOV_counter++;
-		if (angle2 > Unit::_cos_FOV)
+			this->local_mutex.unlock();
+		}
+		if (angle2 > Unit::_cos_FOV) {
+			unit.local_mutex.lock();
 			unit.units_in_FOV_counter++;
+			unit.local_mutex.unlock();
+		}
 	}
 	return ;	
 }

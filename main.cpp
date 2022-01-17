@@ -3,13 +3,18 @@
 #include <iostream>
 #include <string>
 #include <thread>
+#include <mutex>
 
-void calc_units_in_view(std::vector<Unit> &units, unsigned start, unsigned step) {
+void calc_units_in_view(std::vector<Unit> &units, unsigned &current_unit_index, std::mutex &units_protection) {
 	unsigned size = units.size();
-	for (unsigned i = start; i < size; i += step) {
-		for (unsigned j = i + 1; j < size; j++) {
-			units[i].is_in_FOV(units[j]);
-		}
+	unsigned thread_unit_index = 0;
+	while (thread_unit_index < size) {
+		units_protection.lock();
+		thread_unit_index = current_unit_index;
+		current_unit_index++;
+		units_protection.unlock();
+			for (unsigned j = thread_unit_index + 1; j < size; j++)
+					units[thread_unit_index].is_in_FOV(units[j]);
 	}
 }
 
@@ -45,18 +50,17 @@ void parser(std::vector<Unit>& units) {
 int main() {
 	std::vector<Unit> units;
 	std::vector<std::thread> threads;
-	// unsigned threads_number;
+	unsigned threads_number;
 	parser(units);
-	/*
+	unsigned current_unit_index = 0;
+	std::mutex units_protection;
 	threads_number = std::thread::hardware_concurrency();
 	if (threads_number < 1)
 		threads_number = 1;
 	for (unsigned i = 0; i < threads_number; i++)
-		threads.push_back(std::thread(calc_units_in_view, std::ref(units), i, threads_number));
+		threads.push_back(std::thread(calc_units_in_view, std::ref(units), std::ref(current_unit_index), std::ref(units_protection)));
 	for (auto &thread : threads)
 		thread.join();
-		*/
-	calc_units_in_view(units, 0, 1);
 	for (auto unit : units)
 		std::cout << unit;
 	return (0);

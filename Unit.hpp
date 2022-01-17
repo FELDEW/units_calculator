@@ -3,6 +3,8 @@
 
 #include "Vector.hpp"
 #include <iostream>
+#include <thread>
+#include <mutex>
 
 class Unit
 {
@@ -10,6 +12,7 @@ class Unit
 		std::string name;
 		Vector position;
 		Vector view_direction;
+		std::mutex local_mutex;
 		unsigned units_in_FOV_counter;
 		static float _cos_FOV;
 		static float _view_distance_pow2;
